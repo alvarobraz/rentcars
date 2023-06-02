@@ -1,38 +1,48 @@
-import 'reflect-metadata';
-import express, { NextFunction, Request, Response } from 'express';
-import 'express-async-errors';
-import swaggerUi from 'swagger-ui-express';
+import { app } from './app';
 
-import '@shared/container';
-import { AppError } from '@shared/errors/AppErros';
-import createConnection from '@shared/infra/typeorm/';
+const url = 'http://localhost:';
+const PORT = process.env.PORT || 3333;
 
-import swaggerFile from '../../../swagger.json';
-import { router } from './routes';
+app.listen(3333, () => {
+  console.log(
+    `Server is running on port ${PORT}\nGet access here: ${url}${PORT}`,
+  );
+});
+// import 'reflect-metadata';
+// import express, { NextFunction, Request, Response } from 'express';
+// import 'express-async-errors';
+// import swaggerUi from 'swagger-ui-express';
 
-createConnection();
-const app = express();
+// import '@shared/container';
+// import { AppError } from '@shared/errors/AppErros';
+// import createConnection from '@shared/infra/typeorm/';
 
-app.use(express.json());
+// import swaggerFile from '../../../swagger.json';
+// import { router } from './routes';
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+// createConnection();
+// const app = express();
 
-app.use(router);
+// app.use(express.json());
 
-app.use(
-  (err: Error, request: Request, response: Response, next: NextFunction) => {
-    if (err instanceof AppError) {
-      return response.status(err.statusCode).json({
-        message: err.message,
-      });
-    }
-    console.log('err');
-    console.log(err);
-    return response.status(500).json({
-      status: 'error',
-      message: `Interna server error = ${err.message}`,
-    });
-  },
-);
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
-app.listen(3333, () => console.log('Server running on port 3333'));
+// app.use(router);
+
+// app.use(
+//   (err: Error, request: Request, response: Response, next: NextFunction) => {
+//     if (err instanceof AppError) {
+//       return response.status(err.statusCode).json({
+//         message: err.message,
+//       });
+//     }
+//     console.log('err');
+//     console.log(err);
+//     return response.status(500).json({
+//       status: 'error',
+//       message: `Interna server error = ${err.message}`,
+//     });
+//   },
+// );
+
+// app.listen(3333, () => console.log('Server running on port 3333'));
