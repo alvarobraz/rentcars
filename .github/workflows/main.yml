@@ -21,7 +21,7 @@ jobs:
           node-version: 16.x
           
       - name: Install dependencies
-        run: yarn
+        run: yarn install --force
         
       - name: Build
         run: yarn build
